@@ -44,7 +44,7 @@ By completing this assignment, you should be able to:
 │   ├── build0_data_analysis_pipeline_assignment_1.py   # YOU EDIT THIS FILE
 ├── data/
 │   ├── penguins.csv   # THE DATA SET YOU WILL USE TO TEST YOUR PIPELINE CODE
-│   
+├── .gitignore    
 ├── requirements.txt
 └── README.md
 ```
@@ -100,10 +100,6 @@ If the outcome variable is not numeric, raise:
 ```python
 ValueError("Outcome must be numeric for linear regression: <outcome>")
 ```
-
-If predictors is ```None``` then:
-
-Use all other columns as predictors
 
 Missing data:
 
