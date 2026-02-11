@@ -270,8 +270,8 @@ def multiple_linear_regression(
         "predictors": [str(p) for p in predictors],
         "n_rows_used": int(model.nobs),
         "r_squared": float(model.rsquared),
-        "adj_r_squared": float(model.raquared_adj),
-        "intercept": float(model.params["constant"]),
+        "adj_r_squared": float(model.rsquared_adj),
+        "intercept": float(model.params["const"]),
         "coefficients": coef_dict
     }
     return results
