@@ -136,7 +136,7 @@ def profile_to_schema_text(profile: dict) -> str:
         "",
         "Columns and dtypes:",
     ]
-    for col in profile["_____"]:
+    for col in profile["columns"]:
         lines.append(f"- {col}: {profile['dtypes'].get(col)}")
 
     return "\n".join(lines)
@@ -159,14 +159,14 @@ def build_chain(
     if memory:
         prompt = ChatPromptTemplate.from_messages(
             [
-                ("system", _________),
+                ("system", SYSTEM_PROMPT),
                 ("human", "Dataset schema:\n{schema_text}"),
                 MessagesPlaceholder(variable_name="history"),
                 ("human", "User question:\n{user_query}"),
             ]
         )
 
-        base_chain = prompt | ______ | StrOutputParser()
+        base_chain = prompt | llm | StrOutputParser()
 
         history = InMemoryChatMessageHistory()
         chain_with_history = RunnableWithMessageHistory(
@@ -244,28 +244,28 @@ def main():
     )
 
     parser.add_argument(
-        "_____",
-        type=_____,
-        required=_____,
+        "--data",
+        type=str,
+        required=True,
         help="Path to CSV file",
     )
-    parser.add_argument("--report_dir", type=str, default="_____")
-    parser.add_argument("--model", type=str, default="_____")
-    parser.add_argument("--temperature", type=float, default=_____)
+    parser.add_argument("--report_dir", type=str, default="reports")
+    parser.add_argument("--model", type=str, default="gpt-4o-mini")
+    parser.add_argument("--temperature", type=float, default=0.2)
 
     parser.add_argument(
         "--quiet_schema",
-        action="_____",
+        action="store_true",
         help="Do not print schema automatically at startup",
     )
     parser.add_argument(
         "--memory",
-        action="_____",
+        action="store_true",
         help="Enable conversation memory for this session",
     )
     parser.add_argument(
         "--stream",
-        action="_____",
+        action="store_true",
         help="Stream model output to terminal as it is generated",
     )
 
@@ -291,7 +291,7 @@ def main():
         model=args.model,
         temperature=args.temperature,
         stream=args.stream,
-        memory=args.________,
+        memory=args.memory,
     )
 
     while True:
